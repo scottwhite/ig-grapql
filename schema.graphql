@@ -1,0 +1,79 @@
+
+
+type Collector{
+  id: ID!
+  name: String!
+  description: String
+  ipAddres: String!
+  port: Int!
+  organizationId: ID!
+  fingerprint: String!
+  lastPinged: String
+  conductorId: ID
+}
+
+type Location {
+  id: ID!
+  name: String!
+  latitude: String
+  longitude: String
+  street1: String
+  street2: String
+  city: String
+  zipCode: String
+  organizationId: ID!
+}
+
+type OS{
+  id: ID!
+  name: String!
+  manufacturerId: ID!
+}
+
+type OSVersion {
+  id: ID!
+  name: String!
+  version: String!
+  os: OS
+}
+
+enum CiClass {
+  Server
+  File
+  Application
+  Network
+  Storage
+  Security
+}
+
+type Ci{
+  id: ID!
+  name: String!
+  comments: String
+  stateId: ID!
+  modelId: ID!
+  location: Location
+  osVersion: OSVersion
+  lastChecked: String
+  recordSource: String
+  collectorId: ID
+  createdOn: String!
+  baselineAt: String
+  sshPort: String
+  ciClass: String!
+  isCloud: Boolean!
+}
+
+input NewCi{
+  name: String!
+  isCloud: Boolean!
+  ciClass: String!
+}
+
+type Query{
+  cis: [Ci]
+}
+
+type Mutation{
+  createCi(input: NewCi!): Ci!
+}
